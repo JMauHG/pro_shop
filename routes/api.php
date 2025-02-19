@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
@@ -22,5 +23,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('cart', [CartController::class, 'index']);
         Route::post('cart/add/{product}', [CartController::class, 'addProduct']);
         Route::post('cart/remove/{product}', [CartController::class, 'removeProduct']);
+        Route::post('cart/{cart}/purchase', [OrderController::class, 'completePurchase']);
     });
 });

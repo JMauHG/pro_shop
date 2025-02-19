@@ -22,7 +22,14 @@ class CartController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $store = Auth::user()->carts()->create($request->all());
+        $status = Status::where('type', 'cart')->where('name', 'pending')->first();
+
+        $createCart = [
+            'name' => $request->name,
+            'status_id' => $status->id
+        ];
+
+        $store = Auth::user()->carts()->create($createCart);
 
         return $this->sendResponse($store, 201, 'Cart created successfully.');
     }

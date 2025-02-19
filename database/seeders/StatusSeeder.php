@@ -16,7 +16,7 @@ class StatusSeeder extends Seeder
             ['name' => 'pending', 'type' => 'cart'],
             ['name' => 'completed', 'type' => 'cart'],
             ['name' => 'cancelled', 'type' => 'cart'],
-            ['name' => 'processing', 'type' => 'order'],
+            ['name' => 'created', 'type' => 'order'],
             ['name' => 'shipped', 'type' => 'order'],
             ['name' => 'delivered', 'type' => 'order'],
         ];
