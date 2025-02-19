@@ -6,11 +6,16 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Status;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $orders = Auth::user()->orders;
+        return $this->sendResponse($orders, 200, 'Orders get successfully.');
+    }
+
     public function completePurchase(Cart $cart)
     {
         $user = Auth::user();

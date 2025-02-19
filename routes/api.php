@@ -24,5 +24,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('cart/add/{product}', [CartController::class, 'addProduct']);
         Route::post('cart/remove/{product}', [CartController::class, 'removeProduct']);
         Route::post('cart/{cart}/purchase', [OrderController::class, 'completePurchase']);
+        Route::get('orders', [OrderController::class, 'index']);
     });
 });
