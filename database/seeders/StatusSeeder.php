@@ -13,18 +13,17 @@ class StatusSeeder extends Seeder
     public function run(): void
     {
         $statuses = [
-            ['name' => 'Pending', 'type' => 'cart'],
-            ['name' => 'Completed', 'type' => 'cart'],
-            ['name' => 'Cancelled', 'type' => 'cart'],
-            ['name' => 'Processing', 'type' => 'order'],
-            ['name' => 'Shipped', 'type' => 'order'],
-            ['name' => 'Delivered', 'type' => 'order'],
+            ['name' => 'pending', 'type' => 'cart'],
+            ['name' => 'completed', 'type' => 'cart'],
+            ['name' => 'cancelled', 'type' => 'cart'],
+            ['name' => 'processing', 'type' => 'order'],
+            ['name' => 'shipped', 'type' => 'order'],
+            ['name' => 'delivered', 'type' => 'order'],
         ];
 
         foreach ($statuses as $status) {
             Status::firstOrCreate(
                 ['name' => $status['name'], 'type' => $status['type']],
-                ['status' => $status['status']]
             );
         }
     }

@@ -23,7 +23,7 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors());
         }
 
         $user = User::create([
@@ -40,7 +40,7 @@ class AuthController extends Controller
             'name' =>  $user->name,
         ];
 
-        return $this->sendResponse($respose, 'User register successfully.');
+        return $this->sendResponse($respose, 200, 'User register successfully.');
     }
      
     /**
@@ -56,7 +56,7 @@ class AuthController extends Controller
                 'name' =>  $user->name,
             ];
 
-            return $this->sendResponse($respose, 'User login successfully.');
+            return $this->sendResponse($respose, 200, 'User login successfully.');
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);

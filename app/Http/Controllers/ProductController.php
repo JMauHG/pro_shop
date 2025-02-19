@@ -7,18 +7,16 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Listar todos los productos de una tienda
     public function index(Store $store)
     {
-        $this->authorize('view', $store); // Verificar que el vendedor es dueño de la tienda
+        $this->authorize('view', $store);
         $products = $store->products;
-        return response()->json($products);
+        return $this->sendResponse($products, 200, 'Products get successfully.');
     }
 
-    // Crear un nuevo producto en una tienda
     public function store(Request $request, Store $store)
     {
-        $this->authorize('update', $store); // Verificar que el vendedor es dueño de la tienda
+        $this->authorize('update', $store);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -29,20 +27,18 @@ class ProductController extends Controller
 
         $product = $store->products()->create($request->all());
 
-        return response()->json($product, 201);
+        return $this->sendResponse($product, 201, 'Product created successfully.');
     }
 
-    // Mostrar un producto específico
     public function show(Store $store, Product $product)
     {
-        $this->authorize('view', $store); // Verificar que el vendedor es dueño de la tienda
-        return response()->json($product);
+        $this->authorize('view', $store);
+        return $this->sendResponse($product, 200, 'Product get successfully.');
     }
 
-    // Actualizar un producto
     public function update(Request $request, Store $store, Product $product)
     {
-        $this->authorize('update', $store); // Verificar que el vendedor es dueño de la tienda
+        $this->authorize('update', $store);
 
         $request->validate([
             'name' => 'sometimes|string|max:255',
@@ -53,15 +49,14 @@ class ProductController extends Controller
 
         $product->update($request->all());
 
-        return response()->json($product);
+        return $this->sendResponse($product, 200, 'Product updated successfully.');
     }
 
-    // Eliminar un producto
     public function destroy(Store $store, Product $product)
     {
-        $this->authorize('delete', $store); // Verificar que el vendedor es dueño de la tienda
+        $this->authorize('delete', $store);
         $product->delete();
 
-        return response()->json(null, 204);
+        return $this->sendResponse(null, 204, 'Product deleted successfully.');
     }
 }

@@ -10,7 +10,7 @@ class StoreController extends Controller
     public function index()
     {
         $stores = Auth::user()->stores;
-        return response()->json($stores);
+        return $this->sendResponse($stores, 200, 'Stores get successfully.');
     }
 
     public function store(Request $request)
@@ -21,13 +21,13 @@ class StoreController extends Controller
 
         $store = Auth::user()->stores()->create($request->all());
 
-        return response()->json($store, 201);
+        return $this->sendResponse($store, 201, 'Store created successfully.');
     }
 
     public function show(Store $store)
     {
         $this->authorize('view', $store);
-        return response()->json($store);
+        return $this->sendResponse($store, 200, 'Store get successfully.');
     }
 
     public function update(Request $request, Store $store)
@@ -41,7 +41,7 @@ class StoreController extends Controller
 
         $store->update($request->all());
 
-        return response()->json($store);
+        return $this->sendResponse($store, 200, 'Store updated successfully.');
     }
 
     public function destroy(Store $store)
@@ -49,6 +49,6 @@ class StoreController extends Controller
         $this->authorize('delete', $store);
         $store->delete();
 
-        return response()->json(null, 204);
+        return $this->sendResponse(null, 204, 'Store deleted successfully.');
     }
 }

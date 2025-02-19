@@ -12,7 +12,7 @@ abstract class Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $code, $message)
     {
     	$response = [
             'success' => true,
@@ -20,7 +20,7 @@ abstract class Controller
             'message' => $message,
         ];
  
-        return response()->json($response, 200);
+        return response()->json($response, $code);
     }
  
     /**
