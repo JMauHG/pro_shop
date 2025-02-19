@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Status;
+use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -14,6 +15,27 @@ class OrderController extends Controller
     {
         $orders = Auth::user()->orders;
         return $this->sendResponse($orders, 200, 'Orders get successfully.');
+    }
+
+    public function getSalesByStore(Store $store)
+    {
+        $user = Auth::user();
+
+        if ($store->user_id !== $user->id) {
+            return $this->sendError('Unauthorised.', ['error' => 'Store does not belong to user'], 401);
+        }
+
+        $orders = Order::whereHas('orderItems.product', function ($query) use ($store) {
+                $query->where('store_id', $store->id);
+            })
+            ->with('orderItems.product.store')
+            ->get();
+
+        if ($orders->isEmpty()) {
+            return $this->sendResponse([], 201, 'No sales for store.');
+        }
+
+        return $this->sendResponse(['sales' => $orders], 201, 'No sales for store.');
     }
 
     public function completePurchase(Cart $cart)

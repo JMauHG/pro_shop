@@ -17,6 +17,7 @@ Route::middleware('auth:api')->group(function () {
         Route::prefix('stores/{store}')->group(function () {
             Route::apiResource('products', ProductController::class);
         });
+        Route::get('stores/{store}/sales', [OrderController::class, 'getSalesByStore']);
     });
 
     Route::middleware('role:customer')->group(function () {
